@@ -2,6 +2,10 @@
 using Microsoft.Extensions.DependencyInjection;
 using Serilog;
 using System;
+using DemoApp.Directories.Paths;
+using DemoApp.Directories.Reading;
+using DemoApp.Files.Reading;
+using DemoApp.Files.Writing;
 
 namespace DemoApp
 {
@@ -9,22 +13,16 @@ namespace DemoApp
     {
         static void Main(string[] args)
         {
-            //setup our DI
-            IServiceCollection services = new ServiceCollection();
+            var services = CreateServiceCollection();
+            var config = ConfigureConfig();
+            ConfigureLogging(config);
 
-            var builder = new ConfigurationBuilder()
-                                    .SetBasePath(System.IO.Directory.GetCurrentDirectory())
-                                    .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
-            var config = builder.Build();
-
-            var logDirectory = config.GetValue<string>("logPath");
-            var log = new LoggerConfiguration()
-                .WriteTo.Console()
-                .WriteTo.File(logDirectory)
-                .CreateLogger();
-
-            services.AddLogging(configure => configure.AddSerilog());
             services.AddSingleton(config);
+            services.AddLogging(configure => configure.AddSerilog());
+            services.AddTransient<IPathCombiner, PathCombiner>();
+            services.AddTransient<IDirectoryReader, DirectoryReader>();
+            services.AddTransient<IFileReader, FileReader>();
+            services.AddTransient<IFileWriter, FileWriter>();
             services.AddTransient<IFileParser, FileParser>();
 
             var serviceProvider = services.BuildServiceProvider();
@@ -34,6 +32,30 @@ namespace DemoApp
                                   config.GetValue<string>("basePath"), 
                                   config.GetValue<string>("type"),
                                   config.GetValue<string>("outFolder"));
+        }
+
+        private static IConfigurationRoot ConfigureConfig()
+        {
+            var builder = new ConfigurationBuilder()
+                .SetBasePath(System.IO.Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
+            var config = builder.Build();
+            return config;
+        }
+
+        private static void ConfigureLogging(IConfigurationRoot config)
+        {
+            var logDirectory = config.GetValue<string>("logPath");
+            var log = new LoggerConfiguration()
+                .WriteTo.Console()
+                .WriteTo.File(logDirectory)
+                .CreateLogger();
+        }
+
+        private static IServiceCollection CreateServiceCollection()
+        {
+            IServiceCollection services = new ServiceCollection();
+            return services;
         }
     }
 }

@@ -12,31 +12,30 @@ namespace DemoApp
         private readonly IFileReader _fileReader;
         private readonly IFileWriter _fileWriter;
         private readonly IDirectoryReader _directoryReader;
-        private readonly IDirectoryPathCombiner _directoryPathCombiner;
+        private readonly IPathCombiner _pathCombiner;
         private int _validFiles;
         private int _invalidFiles;
 
-        public FileParser(IFileReader fileReader, 
-                          IFileWriter fileWriter, 
-                          IDirectoryReader directoryReader, 
-                          IDirectoryPathCombiner directoryPathCombiner)
+        public FileParser(IFileReader fileReader,
+                          IFileWriter fileWriter,
+                          IDirectoryReader directoryReader,
+                          IPathCombiner pathCombiner)
         {
             _fileReader = fileReader;
             _fileWriter = fileWriter;
             _directoryReader = directoryReader;
-            _directoryPathCombiner = directoryPathCombiner;
+            _pathCombiner = pathCombiner;
         }
 
         public void ParseFiles(string basePath, string inFolder, string type, string outFolder)
         {
             if (!string.IsNullOrWhiteSpace(basePath)
-            &&  !string.IsNullOrWhiteSpace(inFolder)
-            &&  !string.IsNullOrWhiteSpace(type)
-            &&  !string.IsNullOrWhiteSpace(outFolder)) {
+             && !string.IsNullOrWhiteSpace(type))
+            {
                 var fp = basePath;
                 if (!string.IsNullOrWhiteSpace(inFolder))
                 {
-                    fp = _directoryPathCombiner.CombinePaths(basePath, inFolder);
+                    fp = _pathCombiner.Combine(basePath, inFolder);
                 }
                 var files = _directoryReader.GetFilePathsInFolder(fp);
                 if (files.Count() != 0)
@@ -62,16 +61,12 @@ namespace DemoApp
                         }
                     }
 
-                    for(var i = 0; i < validFiles.Count; i ++)
+                    for (var i = 0; i < validFiles.Count; i++)
                     {
                         var fpout = basePath;
                         if (!string.IsNullOrWhiteSpace(outFolder))
                         {
-                            fpout = _directoryPathCombiner.CombinePaths(basePath, outFolder);
-                        }
-                        else
-                        {
-                            fpout = _directoryPathCombiner.CombinePaths(basePath, $"{i + 1}.txt");
+                            fpout = _pathCombiner.Combine(basePath, outFolder);
                         }
                         _fileWriter.WriteFileToFolder($"{i + 1}.txt", validFiles[i], fpout);
                     }

@@ -19,7 +19,7 @@ namespace DemoApp
 
             services.AddSingleton(config);
             services.AddLogging(configure => configure.AddSerilog());
-            services.AddTransient<IDirectoryPathCombiner, DirectoryPathCombiner>();
+            services.AddTransient<IPathCombiner, PathCombiner>();
             services.AddTransient<IDirectoryReader, DirectoryReader>();
             services.AddTransient<IFileReader, FileReader>();
             services.AddTransient<IFileWriter, FileWriter>();

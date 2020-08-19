@@ -1,8 +1,8 @@
 ﻿namespace DemoApp.Directories.Paths
 {
-    public class DirectoryPathCombiner : IDirectoryPathCombiner
+    public class PathCombiner : IPathCombiner
     {
-        public string CombinePaths(string basePath, string relativePath)
+        public string Combine(string basePath, string relativePath)
         {
             return System.IO.Path.Combine(basePath, relativePath);
         }

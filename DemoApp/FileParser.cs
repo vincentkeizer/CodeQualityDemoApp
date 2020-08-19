@@ -12,9 +12,7 @@ namespace DemoApp
         public void ParseFiles(string basePath, string inFolder, string type, string outFolder)
         {
             if (!string.IsNullOrWhiteSpace(basePath)
-            && !string.IsNullOrWhiteSpace(inFolder)
-            && !string.IsNullOrWhiteSpace(type)
-            && !string.IsNullOrWhiteSpace(outFolder))
+            && !string.IsNullOrWhiteSpace(type))
             {
                 var fp = basePath;
                 if (!string.IsNullOrWhiteSpace(inFolder))
@@ -51,10 +49,6 @@ namespace DemoApp
                         if (!string.IsNullOrWhiteSpace(outFolder))
                         {
                             fpout = System.IO.Path.Combine(basePath, outFolder, $"{i + 1}.txt");
-                        }
-                        else
-                        {
-                            fpout = System.IO.Path.Combine(basePath, $"{i + 1}.txt");
                         }
                         System.IO.File.WriteAllText(fpout, validFiles[i]);
                     }

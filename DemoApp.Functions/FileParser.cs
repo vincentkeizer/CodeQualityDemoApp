@@ -1,57 +1,75 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
+using DemoApp.Directories.Paths;
+using DemoApp.Directories.Reading;
+using DemoApp.Files.Reading;
+using DemoApp.Files.Writing;
 
 namespace DemoApp
 {
     public class FileParser : IFileParser
     {
+        private readonly IFileReader _fileReader;
+        private readonly IFileWriter _fileWriter;
+        private readonly IDirectoryReader _directoryReader;
+        private readonly IPathCombiner _pathCombiner;
         private int _validFiles;
         private int _invalidFiles;
 
+        public FileParser(IFileReader fileReader,
+            IFileWriter fileWriter,
+            IDirectoryReader directoryReader,
+            IPathCombiner pathCombiner)
+        {
+            _fileReader = fileReader;
+            _fileWriter = fileWriter;
+            _directoryReader = directoryReader;
+            _pathCombiner = pathCombiner;
+        }
+
         public void ParseFiles(string basePath, string inFolder, string type, string outFolder)
         {
-            if (DoAllArgumentsContainText(basePath, inFolder, type, outFolder))
+            if (ValidateRequiredArguments(basePath, type))
             {
                 var filesPaths = GetFilePathsFromInFolder(basePath, inFolder);
                 if (HasFiles(filesPaths))
                 {
                     var fileContents = GetFileContents(filesPaths);
                     var validFiles = GetValidFileContents(type, fileContents);
-                    MoveValidFilesToOutFolder(basePath, outFolder, validFiles);
+                    CopyValidFilesToOutFolder(basePath, outFolder, validFiles);
                 }
             }
         }
 
-        private static bool DoAllArgumentsContainText(string basePath, string inFolder, string type, string outFolder)
+        private bool ValidateRequiredArguments(string basePath, string type)
         {
             return !string.IsNullOrWhiteSpace(basePath)
-                   && !string.IsNullOrWhiteSpace(inFolder)
-                   && !string.IsNullOrWhiteSpace(type)
-                   && !string.IsNullOrWhiteSpace(outFolder);
+                   && !string.IsNullOrWhiteSpace(type);
         }
 
-        private static string[] GetFilePathsFromInFolder(string basePath, string inFolder)
+        private IEnumerable<string> GetFilePathsFromInFolder(string basePath, string inFolder)
         {
             var fullPath = basePath;
             if (!string.IsNullOrWhiteSpace(inFolder))
             {
-                fullPath = System.IO.Path.Combine(basePath, inFolder);
+                fullPath = _pathCombiner.Combine(basePath, inFolder);
             }
 
-            var filePaths = System.IO.Directory.GetFiles(fullPath);
+            var filePaths = _directoryReader.GetFilePathsInFolder(fullPath);
             return filePaths;
         }
 
-        private static bool HasFiles(string[] filePaths)
+        private bool HasFiles(IEnumerable<string> filePaths)
         {
-            return filePaths.Length != 0;
+            return filePaths.Count() != 0;
         }
 
-        private static List<string> GetFileContents(string[] files)
+        private List<string> GetFileContents(IEnumerable<string> files)
         {
             var fileContents = new List<string>();
             foreach (var file in files)
             {
-                var content = System.IO.File.ReadAllText(file);
+                var content = _fileReader.ReadFile(file);
                 fileContents.Add(content);
             }
 
@@ -78,21 +96,17 @@ namespace DemoApp
             return validFiles;
         }
 
-        private static void MoveValidFilesToOutFolder(string basePath, string outFolder, List<string> validFiles)
+        private void CopyValidFilesToOutFolder(string basePath, string outFolder, List<string> validFiles)
         {
             for (var i = 0; i < validFiles.Count; i++)
             {
                 var fpout = basePath;
                 if (!string.IsNullOrWhiteSpace(outFolder))
                 {
-                    fpout = System.IO.Path.Combine(basePath, outFolder, $"{i + 1}.txt");
-                }
-                else
-                {
-                    fpout = System.IO.Path.Combine(basePath, $"{i + 1}.txt");
+                    fpout = _pathCombiner.Combine(basePath, outFolder);
                 }
 
-                System.IO.File.WriteAllText(fpout, validFiles[i]);
+                _fileWriter.WriteFileToFolder($"{i + 1}.txt", validFiles[i], fpout);
             }
         }
 
