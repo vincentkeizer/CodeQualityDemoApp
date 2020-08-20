@@ -5,18 +5,17 @@ using DemoApp.Infra.Files.Reading;
 using DemoApp.Infra.Files.Writing;
 using DemoApp.Infra.Paths;
 
-namespace DemoApp
+namespace DemoApp.Processing
 {
-    public class FileParser : IFileParser
+    public class FileProcessor : IFileProcessor
     {
         private readonly IFileReader _fileReader;
         private readonly IFileWriter _fileWriter;
         private readonly IDirectoryReader _directoryReader;
         private readonly IPathCombiner _pathCombiner;
-        private int _validFiles;
-        private int _invalidFiles;
 
-        public FileParser(IFileReader fileReader,
+
+        public FileProcessor(IFileReader fileReader,
             IFileWriter fileWriter,
             IDirectoryReader directoryReader,
             IPathCombiner pathCombiner)
@@ -27,18 +26,25 @@ namespace DemoApp
             _pathCombiner = pathCombiner;
         }
 
-        public void ParseFiles(string basePath, string inFolder, string type, string outFolder)
+        public ProcessSummary ParseFiles(string basePath, string inFolder, string type, string outFolder)
         {
+            var totalNumberOfFiles = 0;
+            var numberOfValidFiles = 0;
             if (ValidateRequiredArguments(basePath, type))
             {
                 var filesPaths = GetFilePathsFromInFolder(basePath, inFolder);
                 if (HasFiles(filesPaths))
                 {
+                    totalNumberOfFiles = GetTotalNumberOfFiles(filesPaths);
                     var fileContents = GetFileContents(filesPaths);
                     var validFiles = GetValidFileContents(type, fileContents);
+                    numberOfValidFiles = GetNumberOfValidFiles(validFiles);
                     CopyValidFilesToOutFolder(basePath, outFolder, validFiles);
                 }
             }
+
+            var summary = new ProcessSummary(totalNumberOfFiles, numberOfValidFiles);
+            return summary;
         }
 
         private bool ValidateRequiredArguments(string basePath, string type)
@@ -64,6 +70,11 @@ namespace DemoApp
             return filePaths.Count() != 0;
         }
 
+        private static int GetTotalNumberOfFiles(IEnumerable<string> filesPaths)
+        {
+            return filesPaths.Count();
+        }
+
         private List<string> GetFileContents(IEnumerable<string> files)
         {
             var fileContents = new List<string>();
@@ -85,15 +96,15 @@ namespace DemoApp
                 if (parts.Length == 6 && parts[0] == type)
                 {
                     validFiles.Add(content);
-                    _validFiles++;
-                }
-                else
-                {
-                    _invalidFiles++;
                 }
             }
 
             return validFiles;
+        }
+
+        private static int GetNumberOfValidFiles(List<string> validFiles)
+        {
+            return validFiles.Count();
         }
 
         private void CopyValidFilesToOutFolder(string basePath, string outFolder, List<string> validFiles)
@@ -108,16 +119,6 @@ namespace DemoApp
 
                 _fileWriter.WriteFileToFolder($"{i + 1}.txt", validFiles[i], fpout);
             }
-        }
-
-        public int GetInvalidFiles()
-        {
-            return _invalidFiles;
-        }
-
-        public int GetValidFiles()
-        {
-            return _validFiles;
         }
     }
 }

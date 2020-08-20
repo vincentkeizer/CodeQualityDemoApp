@@ -2,10 +2,10 @@
 using Microsoft.Extensions.DependencyInjection;
 using Serilog;
 using System;
-using DemoApp.Directories.Paths;
-using DemoApp.Directories.Reading;
-using DemoApp.Files.Reading;
-using DemoApp.Files.Writing;
+using DemoApp.Infra.Directories.Reading;
+using DemoApp.Infra.Files.Reading;
+using DemoApp.Infra.Files.Writing;
+using DemoApp.Infra.Paths;
 
 namespace DemoApp
 {

@@ -3,16 +3,17 @@ using DemoApp.Infra.Directories.Reading;
 using DemoApp.Infra.Files.Reading;
 using DemoApp.Infra.Files.Writing;
 using DemoApp.Infra.Paths;
+using DemoApp.Processing;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using Shouldly;
 
-namespace DemoApp.UnitTestable.Tests
+namespace DemoApp.SideEffectsFree.Tests.Processing
 {
     [TestClass]
-    public class FileParserTests
+    public class FileProcessorTests
     {
-        private FileParser _fileParser;
+        private FileProcessor _fileProcessor;
         private Mock<IFileReader> _fileReaderMock;
         private Mock<IFileWriter> _fileWriterMock;
         private Mock<IDirectoryReader> _directorReader;
@@ -26,10 +27,10 @@ namespace DemoApp.UnitTestable.Tests
             _directorReader = new Mock<IDirectoryReader>();
             _pathCombiner = new Mock<IPathCombiner>();
 
-            _fileParser = new FileParser(_fileReaderMock.Object, 
-                                         _fileWriterMock.Object, 
-                                         _directorReader.Object, 
-                                         _pathCombiner.Object);
+            _fileProcessor = new FileProcessor(_fileReaderMock.Object, 
+                                               _fileWriterMock.Object, 
+                                               _directorReader.Object, 
+                                               _pathCombiner.Object);
         }
 
         [TestMethod]
@@ -48,10 +49,10 @@ namespace DemoApp.UnitTestable.Tests
             _directorReader.Setup(r => r.GetFilePathsInFolder(combinedInFolder)).Returns(new List<string> {filePath});
             _fileReaderMock.Setup(r => r.ReadFile(filePath)).Returns(validFileContent);
 
-            _fileParser.ParseFiles(basePath, inFolder, type, outFolder);
+            var processSummary =  _fileProcessor.ParseFiles(basePath, inFolder, type, outFolder);
 
             _fileWriterMock.Verify(w => w.WriteFileToFolder("1.txt", validFileContent, combinedOutFolder), Times.Once);
-            _fileParser.GetValidFiles().ShouldBe(1);
+            processSummary.NumberOfValidFiles.ShouldBe(1);
         }
 
         [TestMethod]
@@ -70,10 +71,10 @@ namespace DemoApp.UnitTestable.Tests
             _directorReader.Setup(r => r.GetFilePathsInFolder(combinedInFolder)).Returns(new List<string> {filePath});
             _fileReaderMock.Setup(r => r.ReadFile(filePath)).Returns(invalidFileContent);
 
-            _fileParser.ParseFiles(basePath, inFolder, type, outFolder);
+            var processSummary = _fileProcessor.ParseFiles(basePath, inFolder, type, outFolder);
 
             _fileWriterMock.Verify(w => w.WriteFileToFolder(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()), Times.Never);
-            _fileParser.GetInvalidFiles().ShouldBe(1);
+            processSummary.NumberOfInvalidFiles.ShouldBe(1);
         }
     }
 }
