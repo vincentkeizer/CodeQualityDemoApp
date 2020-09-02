@@ -26,7 +26,7 @@ namespace DemoApp.Processing
             _pathCombiner = pathCombiner;
         }
 
-        public ProcessSummary ParseFiles(string basePath, string inFolder, string type, string outFolder)
+        public ProcessSummary ProcessFiles(string basePath, string inFolder, string type, string outFolder)
         {
             var totalNumberOfFiles = 0;
             var numberOfValidFiles = 0;

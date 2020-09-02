@@ -5,9 +5,9 @@ using DemoApp.Infra.Files.Reading;
 using DemoApp.Infra.Files.Writing;
 using DemoApp.Infra.Paths;
 
-namespace DemoApp
+namespace DemoApp.Processing
 {
-    public class FileParser : IFileParser
+    public class FileProcessor : IFileProcessor
     {
         private readonly IFileReader _fileReader;
         private readonly IFileWriter _fileWriter;
@@ -16,7 +16,7 @@ namespace DemoApp
         private int _validFiles;
         private int _invalidFiles;
 
-        public FileParser(IFileReader fileReader,
+        public FileProcessor(IFileReader fileReader,
             IFileWriter fileWriter,
             IDirectoryReader directoryReader,
             IPathCombiner pathCombiner)
@@ -27,7 +27,7 @@ namespace DemoApp
             _pathCombiner = pathCombiner;
         }
 
-        public void ParseFiles(string basePath, string inFolder, string type, string outFolder)
+        public void ProcessFiles(string basePath, string inFolder, string type, string outFolder)
         {
             if (ValidateRequiredArguments(basePath, type))
             {

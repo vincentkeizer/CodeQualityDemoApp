@@ -34,7 +34,7 @@ namespace DemoApp.SideEffectsFree.Tests.Processing
         }
 
         [TestMethod]
-        public void Parse_WhenCalledWithValidFile_ThenWritesFileToOutFolder()
+        public void ProcessFiles_WhenCalledWithValidFile_ThenWritesFileToOutFolder()
         {
             var basePath = "basePath";
             var inFolder = "inFolder";
@@ -49,14 +49,14 @@ namespace DemoApp.SideEffectsFree.Tests.Processing
             _directorReader.Setup(r => r.GetFilePathsInFolder(combinedInFolder)).Returns(new List<string> {filePath});
             _fileReaderMock.Setup(r => r.ReadFile(filePath)).Returns(validFileContent);
 
-            var processSummary =  _fileProcessor.ParseFiles(basePath, inFolder, type, outFolder);
+            var processSummary =  _fileProcessor.ProcessFiles(basePath, inFolder, type, outFolder);
 
             _fileWriterMock.Verify(w => w.WriteFileToFolder("1.txt", validFileContent, combinedOutFolder), Times.Once);
             processSummary.NumberOfValidFiles.ShouldBe(1);
         }
 
         [TestMethod]
-        public void Parse_WhenCalledWithInvalidFile_ThenDoesNotWritesFileToOutFolder()
+        public void ProcessFiles_WhenCalledWithInvalidFile_ThenDoesNotWritesFileToOutFolder()
         {
             var basePath = "basePath";
             var inFolder = "inFolder";
@@ -71,7 +71,7 @@ namespace DemoApp.SideEffectsFree.Tests.Processing
             _directorReader.Setup(r => r.GetFilePathsInFolder(combinedInFolder)).Returns(new List<string> {filePath});
             _fileReaderMock.Setup(r => r.ReadFile(filePath)).Returns(invalidFileContent);
 
-            var processSummary = _fileProcessor.ParseFiles(basePath, inFolder, type, outFolder);
+            var processSummary = _fileProcessor.ProcessFiles(basePath, inFolder, type, outFolder);
 
             _fileWriterMock.Verify(w => w.WriteFileToFolder(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<string>()), Times.Never);
             processSummary.NumberOfInvalidFiles.ShouldBe(1);

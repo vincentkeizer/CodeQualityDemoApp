@@ -29,7 +29,7 @@ namespace DemoApp
             var serviceProvider = services.BuildServiceProvider();
 
             var fileParser = serviceProvider.GetService<IFileProcessor>();
-            fileParser.ParseFiles(config.GetValue<string>("inFolder"), 
+            fileParser.ProcessFiles(config.GetValue<string>("inFolder"), 
                                   config.GetValue<string>("basePath"), 
                                   config.GetValue<string>("type"),
                                   config.GetValue<string>("outFolder"));

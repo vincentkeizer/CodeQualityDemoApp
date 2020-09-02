@@ -6,6 +6,7 @@ using DemoApp.Infra.Directories.Reading;
 using DemoApp.Infra.Files.Reading;
 using DemoApp.Infra.Files.Writing;
 using DemoApp.Infra.Paths;
+using DemoApp.Processing;
 
 namespace DemoApp
 {
@@ -23,12 +24,12 @@ namespace DemoApp
             services.AddTransient<IDirectoryReader, DirectoryReader>();
             services.AddTransient<IFileReader, FileReader>();
             services.AddTransient<IFileWriter, FileWriter>();
-            services.AddTransient<IFileParser, FileParser>();
+            services.AddTransient<IFileProcessor, FileProcessor>();
 
             var serviceProvider = services.BuildServiceProvider();
 
-            var fileParser = serviceProvider.GetService<IFileParser>();
-            fileParser.ParseFiles(config.GetValue<string>("inFolder"), 
+            var fileParser = serviceProvider.GetService<IFileProcessor>();
+            fileParser.ProcessFiles(config.GetValue<string>("inFolder"), 
                                   config.GetValue<string>("basePath"), 
                                   config.GetValue<string>("type"),
                                   config.GetValue<string>("outFolder"));

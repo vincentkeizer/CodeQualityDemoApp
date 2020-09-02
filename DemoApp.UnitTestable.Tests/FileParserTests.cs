@@ -33,7 +33,7 @@ namespace DemoApp.UnitTestable.Tests
         }
 
         [TestMethod]
-        public void Parse_WhenCalledWithValidFile_ThenWritesFileToOutFolder()
+        public void ParseFiles_WhenCalledWithValidFile_ThenWritesFileToOutFolder()
         {
             var basePath = "basePath";
             var inFolder = "inFolder";
@@ -55,7 +55,7 @@ namespace DemoApp.UnitTestable.Tests
         }
 
         [TestMethod]
-        public void Parse_WhenCalledWithInvalidFile_ThenDoesNotWritesFileToOutFolder()
+        public void ParseFiles_WhenCalledWithInvalidFile_ThenDoesNotWritesFileToOutFolder()
         {
             var basePath = "basePath";
             var inFolder = "inFolder";
