@@ -28,8 +28,8 @@ namespace DemoApp
 
             var serviceProvider = services.BuildServiceProvider();
 
-            var fileParser = serviceProvider.GetService<IFileProcessor>();
-            fileParser.ProcessFiles(config.GetValue<string>("inFolder"), 
+            var fileProcessor = serviceProvider.GetService<IFileProcessor>();
+            fileProcessor.ProcessFiles(config.GetValue<string>("inFolder"), 
                                   config.GetValue<string>("basePath"), 
                                   config.GetValue<string>("type"),
                                   config.GetValue<string>("outFolder"));

@@ -19,15 +19,21 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DemoApp.Functions.Tests", "
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "03. SideEffects Free", "03. SideEffects Free", "{5F3A4A53-D29C-4D00-9119-EC5EA17F10E5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DemoApp.SideEffectsFree", "DemoApp.SideEffectsFree\DemoApp.SideEffectsFree.csproj", "{7E319FF9-658C-437E-A5FB-8F4A355430AE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DemoApp.SideEffectsFree", "DemoApp.SideEffectsFree\DemoApp.SideEffectsFree.csproj", "{7E319FF9-658C-437E-A5FB-8F4A355430AE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DemoApp.Infra", "DemoApp.Infra\DemoApp.Infra.csproj", "{C23644E6-CB5B-47C0-86F9-39E07EE15153}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DemoApp.Infra", "DemoApp.Infra\DemoApp.Infra.csproj", "{C23644E6-CB5B-47C0-86F9-39E07EE15153}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "00. Generic", "00. Generic", "{9EC6197B-863F-4CBF-AD9B-8AA747884C57}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DemoApp.Infra.Tests", "DemoApp.Infra.Tests\DemoApp.Infra.Tests.csproj", "{7A1A0A12-B587-4CA9-94CC-EA1FF301F041}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DemoApp.Infra.Tests", "DemoApp.Infra.Tests\DemoApp.Infra.Tests.csproj", "{7A1A0A12-B587-4CA9-94CC-EA1FF301F041}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DemoApp.SideEffectsFree.Tests", "DemoApp.SideEffectsFree.Tests\DemoApp.SideEffectsFree.Tests.csproj", "{13CF05BA-CF20-4B9E-8E3D-6CED23930987}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DemoApp.SideEffectsFree.Tests", "DemoApp.SideEffectsFree.Tests\DemoApp.SideEffectsFree.Tests.csproj", "{13CF05BA-CF20-4B9E-8E3D-6CED23930987}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "04. Classes", "04. Classes", "{5E59297F-D559-4570-9623-DAC9FD86A8F7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DemoApp.Classes", "DemoApp.Classes\DemoApp.Classes.csproj", "{C5A4AFD8-197A-47D5-BAD3-A7EBBE92BEF4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DemoApp.Classes.Tests", "DemoApp.Classes.Tests\DemoApp.Classes.Tests.csproj", "{0D98FF76-D4F8-46A2-99A5-251C1B3419CC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -71,6 +77,14 @@ Global
 		{13CF05BA-CF20-4B9E-8E3D-6CED23930987}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{13CF05BA-CF20-4B9E-8E3D-6CED23930987}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{13CF05BA-CF20-4B9E-8E3D-6CED23930987}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C5A4AFD8-197A-47D5-BAD3-A7EBBE92BEF4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C5A4AFD8-197A-47D5-BAD3-A7EBBE92BEF4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C5A4AFD8-197A-47D5-BAD3-A7EBBE92BEF4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C5A4AFD8-197A-47D5-BAD3-A7EBBE92BEF4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0D98FF76-D4F8-46A2-99A5-251C1B3419CC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0D98FF76-D4F8-46A2-99A5-251C1B3419CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0D98FF76-D4F8-46A2-99A5-251C1B3419CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0D98FF76-D4F8-46A2-99A5-251C1B3419CC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -84,6 +98,8 @@ Global
 		{C23644E6-CB5B-47C0-86F9-39E07EE15153} = {9EC6197B-863F-4CBF-AD9B-8AA747884C57}
 		{7A1A0A12-B587-4CA9-94CC-EA1FF301F041} = {9EC6197B-863F-4CBF-AD9B-8AA747884C57}
 		{13CF05BA-CF20-4B9E-8E3D-6CED23930987} = {5F3A4A53-D29C-4D00-9119-EC5EA17F10E5}
+		{C5A4AFD8-197A-47D5-BAD3-A7EBBE92BEF4} = {5E59297F-D559-4570-9623-DAC9FD86A8F7}
+		{0D98FF76-D4F8-46A2-99A5-251C1B3419CC} = {5E59297F-D559-4570-9623-DAC9FD86A8F7}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {6C82F46A-C288-42DE-867E-2DBFCF303F9C}

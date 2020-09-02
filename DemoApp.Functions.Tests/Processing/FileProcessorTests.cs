@@ -8,7 +8,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using Shouldly;
 
-namespace DemoApp.Functions.Tests.Processing
+namespace DemoApp.Tests.Processing
 {
     [TestClass]
     public class FileParserTests
