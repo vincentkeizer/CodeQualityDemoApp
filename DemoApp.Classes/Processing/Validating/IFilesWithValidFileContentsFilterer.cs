@@ -5,7 +5,7 @@ using DemoApp.Processing.Reading.Files;
 
 namespace DemoApp.Processing.Validating
 {
-    public interface IValidContentFilesFilterer
+    public interface IFilesWithValidFileContentsFilterer
     {
         IEnumerable<ValidFileContents> GetValidFileContents(string validationType, IEnumerable<FileContents> fileContents);
     }

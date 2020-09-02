@@ -20,7 +20,7 @@ namespace DemoApp.Processing.Writing
             _pathCombiner = pathCombiner;
         }
 
-        public void WriteValidFile(OutputPath outputPath, IEnumerable<ValidFileContents> validFiles)
+        public void WriteValidFileContents(OutputPath outputPath, IEnumerable<ValidFileContents> validFiles)
         {
             Assert.IsNotNull(outputPath, nameof(outputPath));
             Assert.IsNotNull(validFiles, nameof(validFiles));

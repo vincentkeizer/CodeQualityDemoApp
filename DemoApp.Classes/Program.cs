@@ -44,7 +44,7 @@ namespace DemoApp
             services.AddTransient<IFileWriter, FileWriter>();
             services.AddTransient<IFilesToProcessReader, FilesToProcessReader>();
             services.AddTransient<IFileContentsReader, FileContentsReader>();
-            services.AddTransient<IValidContentFilesFilterer, ValidContentFilesFilterer>();
+            services.AddTransient<IFilesWithValidFileContentsFilterer, FilesWithValidFileContentsFilterer>();
             services.AddTransient<IFileContentsValidator, FileContentsValidator>();
             services.AddTransient<IValidFileContentsWriter, ValidFileContentsWriter>();
             services.AddTransient<IFileProcessor, FileProcessor>();

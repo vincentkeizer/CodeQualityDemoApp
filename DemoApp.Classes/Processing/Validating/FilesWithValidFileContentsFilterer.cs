@@ -6,11 +6,11 @@ using DemoApp.Processing.Reading.Files;
 
 namespace DemoApp.Processing.Validating
 {
-    public class ValidContentFilesFilterer : IValidContentFilesFilterer
+    public class FilesWithValidFileContentsFilterer : IFilesWithValidFileContentsFilterer
     {
         private readonly IFileContentsValidator _fileContentsValidator;
 
-        public ValidContentFilesFilterer(IFileContentsValidator fileContentsValidator)
+        public FilesWithValidFileContentsFilterer(IFileContentsValidator fileContentsValidator)
         {
             _fileContentsValidator = fileContentsValidator;
         }

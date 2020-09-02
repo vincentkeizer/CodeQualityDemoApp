@@ -16,12 +16,12 @@ namespace DemoApp.Processing
     {
         private readonly IFilesToProcessReader _filesToProcessReader;
         private readonly IFileContentsReader _fileContentsReader;
-        private readonly IValidContentFilesFilterer _validContentFilesFilterer;
+        private readonly IFilesWithValidFileContentsFilterer _validContentFilesFilterer;
         private readonly IValidFileContentsWriter _validFileContentsWriter;
 
         public FileProcessor(IFilesToProcessReader filesToProcessReader,
                              IFileContentsReader fileContentsReader,
-                             IValidContentFilesFilterer validContentFilesFilterer,
+                             IFilesWithValidFileContentsFilterer validContentFilesFilterer,
                              IValidFileContentsWriter validFileContentsWriter)
         {
             _filesToProcessReader = filesToProcessReader;
@@ -91,7 +91,7 @@ namespace DemoApp.Processing
         private void CopyValidFilesToOutFolder(string basePath, string outFolder, IEnumerable<ValidFileContents> validFileContents)
         {
             var outputPath = new OutputPath(basePath, outFolder);
-            _validFileContentsWriter.WriteValidFile(outputPath, validFileContents);
+            _validFileContentsWriter.WriteValidFileContents(outputPath, validFileContents);
         }
     }
 }
