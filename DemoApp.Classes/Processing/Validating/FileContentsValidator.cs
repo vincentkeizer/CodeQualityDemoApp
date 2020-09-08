@@ -15,12 +15,7 @@ namespace DemoApp.Processing.Validating
             Assert.IsNotNull(fileContents, nameof(fileContents));
 
             var parts = fileContents.Contents.Split(";");
-            if (parts.Length == 6 && parts[0] == validationType)
-            {
-                return true;
-            }
-
-            return false;
+            return parts.Length == 6 && parts[0] == validationType;
         }
     }
 }
